@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -10,14 +8,18 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  TextEditingController _usernameController = new TextEditingController();
-  TextEditingController _emailController = new TextEditingController();
-  TextEditingController _passController = new TextEditingController();
-  TextEditingController _confirmpassController = new TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _confirmpassController = TextEditingController();
+  final _registerKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF6777EF),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -30,6 +32,7 @@ class _RegisterState extends State<Register> {
             ),
           ),
           Form(
+            key: _registerKey,
             child: Padding(
               padding: const EdgeInsets.all(50.0),
               child: Column(
@@ -52,7 +55,7 @@ class _RegisterState extends State<Register> {
                       border: OutlineInputBorder(
                         borderSide: BorderSide(
                           width: 1,
-                          color: Color.fromARGB(255, 48, 73, 209),
+                          color: Color(0xFF3049D1),
                         ),
                       ),
                     ),
@@ -147,7 +150,11 @@ class _RegisterState extends State<Register> {
                           const Color(0xFF6777EF),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_registerKey.currentState!.validate()) {
+                          Navigator.pushNamed(context, '/login');
+                        }
+                      },
                       child: const Text('Register'),
                     ),
                   ),
