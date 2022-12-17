@@ -1,5 +1,6 @@
 import 'package:api_app/services/login_service.dart';
 import 'package:api_app/views/homepage.dart';
+import 'package:api_app/views/register.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,9 +13,11 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       routes: {
         '/homepage': (context) => HomePage(),
         '/login': (context) => MainApp(),
+        '/register': (context) => Register(),
       },
       home: MyApp(),
     );
@@ -130,7 +133,7 @@ class _MyAppState extends State<MyApp> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          Color(0xFF6777EF),
+                          const Color(0xFF6777EF),
                         ),
                       ),
                       onPressed: () async {
@@ -164,11 +167,13 @@ class _MyAppState extends State<MyApp> {
                       TextButton(
                         style: ButtonStyle(
                           foregroundColor: MaterialStateProperty.all(
-                            Color(0xFF6777EF),
+                            const Color(0xFF6777EF),
                           ),
                         ),
                         child: const Text('Daftar akun baru'),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
                       ),
                     ],
                   ),
