@@ -29,41 +29,81 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Homepage'),
+      backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: const Color(0xFF6777EF),
+        child: const Icon(Icons.add),
       ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              logout.postDataLogout().then(
-                    (value) => Navigator.of(context).popAndPushNamed('/login'),
-                  );
-            },
-            child: const Text('Logout'),
-          ),
-          Expanded(
-            child: FutureBuilder(
-              future: cs.getData(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return ListView(
-                    children: (snapshot.data ?? [])
-                        .map(
-                          (e) => Container(
-                            padding: EdgeInsets.fromLTRB(10, 30, 10, 100),
-                            child: Text(e.name),
-                          ),
-                        )
-                        .toList(),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
+      body: Padding(
+        padding: const EdgeInsets.all(50.0),
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                logout.postDataLogout().then(
+                      (value) =>
+                          Navigator.of(context).popAndPushNamed('/login'),
+                    );
               },
+              child: const Text('Logout'),
             ),
-          )
-        ],
+            Expanded(
+              child: FutureBuilder(
+                future: cs.getData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView(
+                      children: (snapshot.data ?? [])
+                          .map(
+                            (e) => Card(
+                              color: const Color(0xFF6777EF),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      e.name,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          color: Colors.brown,
+                                          icon: const Icon(Icons.edit),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
