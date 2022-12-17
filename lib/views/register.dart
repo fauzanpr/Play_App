@@ -1,3 +1,4 @@
+import 'package:api_app/services/register_service.dart';
 import 'package:flutter/material.dart';
 
 class Register extends StatefulWidget {
@@ -13,6 +14,8 @@ class _RegisterState extends State<Register> {
   final TextEditingController _passController = TextEditingController();
   final TextEditingController _confirmpassController = TextEditingController();
   final _registerKey = GlobalKey<FormState>();
+
+  RegisterService registerService = RegisterService();
 
   @override
   Widget build(BuildContext context) {
@@ -150,9 +153,26 @@ class _RegisterState extends State<Register> {
                           const Color(0xFF6777EF),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        // if (_registerKey.currentState!.validate()) {
+                        //   Navigator.pushNamed(context, '/login');
+                        // }
                         if (_registerKey.currentState!.validate()) {
-                          Navigator.pushNamed(context, '/login');
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          bool response = await registerService.postRegister(
+                            _usernameController.text,
+                            _emailController.text,
+                            _passController.text,
+                            _confirmpassController.text,
+                          );
+
+                          print(response);
+
+                          if (response) {
+                            print('pada main:' + response.toString());
+                            Navigator.of(context).popAndPushNamed('/login');
+                          } else {}
                         }
                       },
                       child: const Text('Register'),
