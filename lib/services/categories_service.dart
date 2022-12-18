@@ -27,4 +27,18 @@ class CategoriesService {
 
     return payload.map((e) => Categories.fromJson(e)).toList();
   }
+
+  
+
+  Future requestDelete(Categories category) async {
+    var apiUrl = Uri.parse('${_baseURL}/category/${category.id}');
+
+    final value = await storage.read(key: 'token');
+
+    final response = await http.delete(apiUrl, headers: {
+      HttpHeaders.authorizationHeader: 'Bearer $value',
+    });
+
+    return response;
+  }
 }

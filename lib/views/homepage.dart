@@ -31,7 +31,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/category/add');
+        },
         backgroundColor: const Color(0xFF6777EF),
         child: const Icon(Icons.add),
       ),
@@ -76,7 +78,9 @@ class _HomePageState extends State<HomePage> {
                                     Row(
                                       children: [
                                         IconButton(
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            await cs.requestDelete(e);
+                                          },
                                           icon: const Icon(
                                             Icons.delete,
                                             color: Colors.red,
