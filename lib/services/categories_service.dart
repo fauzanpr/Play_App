@@ -17,7 +17,7 @@ class CategoriesService {
       throw Exception('ERROR VALUE NULL');
     }
     final response = await http.get(
-      Uri.parse('${_baseURL}category'),
+      Uri.parse('${_baseURL}category?page=2'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $value',
       },
@@ -28,10 +28,37 @@ class CategoriesService {
     return payload.map((e) => Categories.fromJson(e)).toList();
   }
 
-  
+  Future addCategory(String name) async {
+    try {
+      final response = await http.post(
+        Uri.parse(_baseURL + 'category'),
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: {
+          'name': name,
+        },
+      );
+
+      if (response.statusCode == 201) {
+        print('tokennya register adalah : ' + response.body);
+
+        await storage.write(
+          key: 'token',
+          value: jsonDecode(response.body)['token'],
+        );
+        return true;
+      } else {
+        print(response.statusCode);
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   Future requestDelete(Categories category) async {
-    var apiUrl = Uri.parse('${_baseURL}/category/${category.id}');
+    var apiUrl = Uri.parse('${_baseURL}category/${category.id}');
 
     final value = await storage.read(key: 'token');
 

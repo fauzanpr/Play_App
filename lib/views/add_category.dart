@@ -1,3 +1,4 @@
+import 'package:api_app/services/categories_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -11,6 +12,10 @@ class AddCategory extends StatefulWidget {
 
 class _AddCategoryState extends State<AddCategory> {
   @override
+  final _addcategorykey = GlobalKey<FormState>();
+  final TextEditingController _addcategory = TextEditingController();
+  CategoriesService categoryService = CategoriesService();
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -28,6 +33,7 @@ class _AddCategoryState extends State<AddCategory> {
             ),
           ),
           Form(
+            key: _addcategorykey,
             child: Padding(
               padding: const EdgeInsets.all(50.0),
               child: Column(
@@ -40,6 +46,7 @@ class _AddCategoryState extends State<AddCategory> {
                       }
                       return null;
                     },
+                    controller: _addcategory,
                     decoration: const InputDecoration(
                       labelText: 'Category name',
                       focusedBorder: OutlineInputBorder(
@@ -66,7 +73,22 @@ class _AddCategoryState extends State<AddCategory> {
                           const Color(0xFF6777EF),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (_addcategorykey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          bool response = await categoryService.addCategory(
+                            _addcategory.text,
+                          );
+
+                          print(response);
+
+                          if (response) {
+                            print('pada main:' + response.toString());
+                            Navigator.of(context).popAndPushNamed('/homepage');
+                          } else {}
+                        }
+                      },
                       child: const Text('Submit'),
                     ),
                   ),
