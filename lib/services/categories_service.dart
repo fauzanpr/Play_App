@@ -45,12 +45,6 @@ class CategoriesService {
       print('atasss : ' + response.body);
 
       if (response.statusCode == 201) {
-        print('tokennya register adalah : ' + response.body);
-
-        await storage.write(
-          key: 'token',
-          value: jsonDecode(response.body)['token'],
-        );
         return true;
       } else {
         print(response.statusCode);

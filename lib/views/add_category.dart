@@ -77,16 +77,18 @@ class _AddCategoryState extends State<AddCategory> {
                         if (_addcategorykey.currentState!.validate()) {
                           // If the form is valid, display a snackbar. In the real world,
                           // you'd often call a server or save the information in a database.
-                          bool response = await categoryService.addCategory(
-                            _addcategory.text,
-                          );
+                          await categoryService
+                              .addCategory(
+                                _addcategory.text,
+                              )
+                              .then((value) => Navigator.of(context)
+                                  .popAndPushNamed('/homepage'));
 
-                          print(response);
+                          // print(response);
 
-                          if (response) {
-                            print('pada main:' + response.toString());
-                            Navigator.of(context).popAndPushNamed('/homepage');
-                          } else {}
+                          // if (response) {
+                          //   print('pada main:' + response.toString());
+                          // } else {}
                         }
                       },
                       child: const Text('Submit'),
