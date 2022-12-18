@@ -39,6 +39,7 @@ class _MyAppState extends State<MyApp> {
 
   LoginService loginService = LoginService();
   final _formKey = GlobalKey<FormState>();
+  bool isLoginFalse = false;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +78,17 @@ class _MyAppState extends State<MyApp> {
                   const SizedBox(
                     height: 15,
                   ),
+                  isLoginFalse == false
+                      ? const Text('')
+                      : const Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: Text(
+                            'Login gagal',
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
                   TextFormField(
                     // The validator receives the text that the user has entered.
                     validator: (value) {
@@ -153,7 +165,11 @@ class _MyAppState extends State<MyApp> {
                           if (response) {
                             print('pada main:' + response.toString());
                             Navigator.of(context).popAndPushNamed('/homepage');
-                          } else {}
+                          } else {
+                            setState(() {
+                              isLoginFalse = true;
+                            });
+                          }
                         }
                       },
                       child: const Text('Login'),
