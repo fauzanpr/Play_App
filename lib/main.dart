@@ -17,11 +17,11 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/homepage': (context) => HomePage(),
-        '/login': (context) => MainApp(),
-        '/register': (context) => Register(),
-        '/category/add': (context) => AddCategory(),
-        '/category/update': (context) => UpdateCategory(),
+        '/homepage': (context) => const HomePage(),
+        '/login': (context) => const MainApp(),
+        '/register': (context) => const Register(),
+        '/category/add': (context) => const AddCategory(),
+        '/category/update': (context) => const UpdateCategory(),
       },
       home: MyApp(),
     );
@@ -125,6 +125,9 @@ class _MyAppState extends State<MyApp> {
                       }
                       return null;
                     },
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
                     controller: _passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Password',
