@@ -29,16 +29,20 @@ class CategoriesService {
   }
 
   Future addCategory(String name) async {
+    String? token = await storage.read(key: 'token');
     try {
       final response = await http.post(
         Uri.parse(_baseURL + 'category'),
         headers: {
           'Accept': 'application/json',
+          "Authorization": "Bearer $token",
         },
         body: {
           'name': name,
         },
       );
+
+      print('atasss : ' + response.body);
 
       if (response.statusCode == 201) {
         print('tokennya register adalah : ' + response.body);
