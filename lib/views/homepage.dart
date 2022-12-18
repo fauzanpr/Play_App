@@ -80,6 +80,7 @@ class _HomePageState extends State<HomePage> {
                                         IconButton(
                                           onPressed: () async {
                                             await cs.requestDelete(e);
+                                            setState(() {});
                                           },
                                           icon: const Icon(
                                             Icons.delete,

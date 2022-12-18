@@ -17,7 +17,7 @@ class CategoriesService {
       throw Exception('ERROR VALUE NULL');
     }
     final response = await http.get(
-      Uri.parse('${_baseURL}category?page=2'),
+      Uri.parse('${_baseURL}category'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $value',
       },
