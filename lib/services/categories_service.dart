@@ -55,6 +55,24 @@ class CategoriesService {
     }
   }
 
+  Future requestUpdate(int categoryId, String newCategoryName) async {
+    var apiUrl = Uri.parse('${_baseURL}category/${categoryId}');
+    String? token = await storage.read(key: 'token');
+
+    final response = await http.put(
+      apiUrl,
+      headers: {
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
+      },
+      body: {
+        "name": newCategoryName,
+      },
+    );
+
+    return response.statusCode;
+  }
+
   Future requestDelete(Categories category) async {
     var apiUrl = Uri.parse('${_baseURL}category/${category.id}');
 

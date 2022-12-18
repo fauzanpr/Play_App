@@ -31,8 +31,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/category/add');
+        onPressed: () async {
+          final data = await Navigator.pushNamed(context, '/category/add');
+          if (data != null) {
+            await getData();
+            setState(() {});
+          }
         },
         backgroundColor: const Color(0xFF6777EF),
         child: const Icon(Icons.add),
@@ -88,7 +92,16 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         IconButton(
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            var data = await Navigator.of(
+                                                    context)
+                                                .pushNamed('/category/update',
+                                                    arguments: [e.id, e.name]);
+                                            if (data != null) {
+                                              await getData();
+                                              setState(() {});
+                                            }
+                                          },
                                           color: Colors.brown,
                                           icon: const Icon(Icons.edit),
                                         ),

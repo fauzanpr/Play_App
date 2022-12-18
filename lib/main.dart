@@ -2,6 +2,7 @@ import 'package:api_app/services/login_service.dart';
 import 'package:api_app/views/add_category.dart';
 import 'package:api_app/views/homepage.dart';
 import 'package:api_app/views/register.dart';
+import 'package:api_app/views/update_category.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class MainApp extends StatelessWidget {
         '/login': (context) => MainApp(),
         '/register': (context) => Register(),
         '/category/add': (context) => AddCategory(),
+        '/category/update': (context) => UpdateCategory(),
       },
       home: MyApp(),
     );
