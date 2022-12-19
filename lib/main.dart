@@ -36,8 +36,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController =
+      TextEditingController(text: 'fauzanpr@mail.com');
+  final TextEditingController _passwordController =
+      TextEditingController(text: '12345678');
 
   LoginService loginService = LoginService();
   final _formKey = GlobalKey<FormState>();

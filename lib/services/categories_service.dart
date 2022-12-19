@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:api_app/models/categories.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -10,14 +11,14 @@ class CategoriesService {
 
   final storage = const FlutterSecureStorage();
 
-  Future<List<Categories>> getData() async {
+  Future<List<Categories>> getData(int _page) async {
     String? value = await storage.read(key: 'token');
     print('value ==> $value');
     if (value == null) {
       throw Exception('ERROR VALUE NULL');
     }
     final response = await http.get(
-      Uri.parse('${_baseURL}category'),
+      Uri.parse('${_baseURL}category?page=${_page.toString()}'),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer $value',
       },
@@ -27,6 +28,42 @@ class CategoriesService {
 
     return payload.map((e) => Categories.fromJson(e)).toList();
   }
+
+  // Future<List<dynamic>> getData() async {
+  //   String? value = await storage.read(key: 'token');
+  //   print('value ==> $value');
+  //   if (value == null) {
+  //     throw Exception('ERROR VALUE NULL');
+  //   }
+  //   final response = await http.get(
+  //     Uri.parse('${_baseURL}category'),
+  //     headers: {
+  //       HttpHeaders.authorizationHeader: 'Bearer $value',
+  //     },
+  //   );
+
+  //   List<Categories> categories = [];
+  //   List<dynamic> categoryServices = [];
+
+  //   if (response.statusCode == 200) {
+  //     var jsonObject = json.decode(response.body);
+  //     List<dynamic> listCategories =
+  //         (jsonObject as Map<String, dynamic>)['data'];
+
+  //     var page = jsonObject['meta'];
+
+  //     List listPage = page.values.toList();
+
+  //     for (var category in listCategories) {
+  //       categories.add(Categories.fromMap(category));
+  //     }
+
+  //     categoryServices.add(categories);
+  //     categoryServices.add(listPage[2]);
+  //   }
+
+  //   return categoryServices;
+  // }
 
   Future addCategory(String name) async {
     String? token = await storage.read(key: 'token');

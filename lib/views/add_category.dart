@@ -81,7 +81,8 @@ class _AddCategoryState extends State<AddCategory> {
                               .addCategory(
                                 _addcategory.text,
                               )
-                              .then((value) => Navigator.of(context).pop(true));
+                              .then((value) => Navigator.of(context)
+                                  .popAndPushNamed('/homepage'));
 
                           // print(response);
 
